@@ -12,7 +12,7 @@ public abstract class Point : MonoBehaviour
     public virtual void Collect()
     {
         CustomLog.Log(CustomLog.CustomLogType.GAMEPLAY, "Point Collected with amount " + amount);
-        // Do other stuff ...
+        ScoreManager.Instance.AddPoint(amount);
         Destroy(gameObject);
     }
 }
