@@ -29,16 +29,16 @@ public class PlayerMovements : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (InputManager.Instance.IsLeftPressed())
             SetDirection(Vector3.left);
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (InputManager.Instance.IsRightPressed())
             SetDirection(Vector3.right);
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (InputManager.Instance.IsUpPressed())
             SetDirection(Vector3.up);
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (InputManager.Instance.IsDownPressed())
             SetDirection(Vector3.down);
 
         if (_nextDirection != Vector3.zero)
