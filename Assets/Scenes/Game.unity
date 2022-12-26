@@ -4300,7 +4300,7 @@ GameObject:
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &318346139
 Animator:
   serializedVersion: 4
@@ -4309,9 +4309,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318346138}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 073e8dc0da97a6a4b9223e3b20d5410f, type: 2}
+  m_Controller: {fileID: 22100000, guid: 84992977e55815249a7309535f822f86, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4328,13 +4328,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318346138}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95384bc6d3d3aa54d953adc3986e191d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 318346139}
-  ghost: {fileID: 0}
+  ghost: {fileID: 318346145}
 --- !u!50 &318346142
 Rigidbody2D:
   serializedVersion: 4
@@ -4597,7 +4597,7 @@ GameObject:
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &389192414
 Animator:
   serializedVersion: 4
@@ -10712,7 +10712,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.41
+  m_Radius: 0.4
 --- !u!114 &965017881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10941,7 +10941,7 @@ GameObject:
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1159204422
 Transform:
   m_ObjectHideFlags: 0
@@ -11867,7 +11867,7 @@ GameObject:
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1841050475
 Animator:
   serializedVersion: 4
