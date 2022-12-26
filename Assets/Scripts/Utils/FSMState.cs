@@ -48,4 +48,5 @@ public abstract class FSMState
 
     // Addition methods for collision and triggers can be added in this format too.
     //public virtual void OnCollisionEnter2D(Collision2D collision) { }
+    public virtual void OnTriggerEnter2D(Collider2D collision) { }
 }

@@ -24,12 +24,6 @@ public class Ghost : MonoBehaviour
     private FSMSystem _FSM;
     private ScatterState _scatterState;
 
-    public bool OccupiedInDirection(Vector3 direction)
-    {
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position, Vector2.one * 0.75f, 0.0f, direction, 0.2f, obstacleLayer);
-        return hit.collider != null;
-    }
-
     public void SetDirection(Vector3 direction)
     {
         MovementDirection = direction;
@@ -37,7 +31,7 @@ public class Ghost : MonoBehaviour
 
     private void Awake()
     {
-        MovementDirection = Vector3.right;
+        MovementDirection = Vector3.zero;
         _rb = GetComponent<Rigidbody2D>();
     }
 
@@ -63,5 +57,11 @@ public class Ghost : MonoBehaviour
         _scatterState = new ScatterState(this,scatterTarget.position);
         
         _FSM.AddState(_scatterState);
+        _FSM.GoToState(_scatterState);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        _FSM.CurrentState.OnTriggerEnter2D(collision);
     }
 }
