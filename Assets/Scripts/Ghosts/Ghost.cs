@@ -6,6 +6,7 @@ using Utils;
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class Ghost : MonoBehaviour
 {
+    public FSMSystem StateMachine { get=>FSM;}
     public Vector3 MovementDirection { get; private set; }
 
     [Header("General Settings")]
