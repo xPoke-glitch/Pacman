@@ -56,6 +56,7 @@ public class Blinky : Ghost
         if (collision.gameObject.tag.Equals("SafeArea") && FSM.CurrentState == FSM_eatenState)
         {
             Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), Player.GetComponent<Collider2D>(), false);
+            
             int randIndex = Random.Range(0, 2);
 
             if (randIndex == 0)
