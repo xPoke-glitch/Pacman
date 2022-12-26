@@ -83,6 +83,9 @@ public class ChaseStatePinky : FSMState
 
     private void UpdateTargetPosition()
     {
+        if (_playerTarget == null)
+            return;
+
         if (_playerTarget.MovementDirection == Vector3.up)
         {
             _target = _playerTarget.transform.position + new Vector3Int(4, 4, 0);
