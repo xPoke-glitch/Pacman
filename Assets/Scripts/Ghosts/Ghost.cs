@@ -12,6 +12,12 @@ public abstract class Ghost : MonoBehaviour
     [SerializeField]
     protected float MovementSpeed = 2.0f;
     [SerializeField]
+    protected float FrightenedTime = 5.0f;
+    [SerializeField]
+    protected float ChaseTime = 20.0f;
+    [SerializeField]
+    protected float ScatterTime = 7.0f;
+    [SerializeField]
     protected LayerMask ObstacleLayer;
 
     [Header("Ghost States Settings")]
@@ -20,8 +26,15 @@ public abstract class Ghost : MonoBehaviour
     [SerializeField]
     protected Transform EatenTarget;
 
+    // FSM
     protected FSMSystem FSM;
+    protected ScatterState FSM_scatterState;
+    protected FrightenedState FSM_frightenedState;
+    protected EatenState FSM_eatenState;
+
     protected Player Player;
+    protected float ChaseTimer = 0.0f;
+    protected float ScatterTimer = 0.0f;
 
     private Rigidbody2D _rb;
 
@@ -30,7 +43,19 @@ public abstract class Ghost : MonoBehaviour
         MovementDirection = direction;
     }
 
-    protected abstract void SetupFSM();
+    protected abstract IEnumerator COWaitFirghtenedTimer();
+
+    protected virtual void SetupFSM()
+    {
+        FSM = new FSMSystem();
+        FSM_scatterState = new ScatterState(this, ScatterTarget.position);
+        FSM_frightenedState = new FrightenedState(this);
+        FSM_eatenState = new EatenState(this, EatenTarget.position);
+
+        FSM.AddState(FSM_scatterState);
+        FSM.AddState(FSM_frightenedState);
+        FSM.AddState(FSM_eatenState);
+    }
    
     protected virtual void Awake()
     {
@@ -42,6 +67,16 @@ public abstract class Ghost : MonoBehaviour
     protected virtual void Start()
     {
         SetupFSM();
+    }
+
+    protected virtual void OnEnable()
+    {
+        BigPoint.OnBigPointCollected += SwitchToFrightened;
+    }
+
+    protected virtual void OnDisable()
+    {
+        BigPoint.OnBigPointCollected -= SwitchToFrightened;
     }
 
     protected virtual void Update()
@@ -58,5 +93,24 @@ public abstract class Ghost : MonoBehaviour
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         FSM.CurrentState.OnTriggerEnter2D(collision);
+
+        Player p;
+        if(collision.gameObject.TryGetComponent(out p) && FSM.CurrentState == FSM_frightenedState)
+        {
+            StopAllCoroutines();
+
+            Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), p.GetComponent<Collider2D>(), true);
+            FSM.GoToState(FSM_eatenState);
+            ScoreManager.Instance.AddPoint(300);
+        }
+    }
+
+    private void SwitchToFrightened()
+    {
+        if (FSM.CurrentState == FSM_frightenedState || FSM.CurrentState == FSM_eatenState)
+            return;
+
+        FSM.GoToState(FSM_frightenedState);
+        StartCoroutine(COWaitFirghtenedTimer());
     }
 }
