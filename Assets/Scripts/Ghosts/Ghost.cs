@@ -33,6 +33,7 @@ public abstract class Ghost : MonoBehaviour
     protected ScatterState FSM_scatterState;
     protected FrightenedState FSM_frightenedState;
     protected EatenState FSM_eatenState;
+    protected GameOverState FSM_gameOver;
 
     protected Player Player;
     protected float ChaseTimer = 0.0f;
@@ -53,10 +54,12 @@ public abstract class Ghost : MonoBehaviour
         FSM_scatterState = new ScatterState(this, ScatterTarget.position);
         FSM_frightenedState = new FrightenedState(this);
         FSM_eatenState = new EatenState(this, EatenTarget.position);
+        FSM_gameOver = new GameOverState(this);
 
         FSM.AddState(FSM_scatterState);
         FSM.AddState(FSM_frightenedState);
         FSM.AddState(FSM_eatenState);
+        FSM.AddState(FSM_gameOver);
     }
    
     protected virtual void Awake()
@@ -74,11 +77,13 @@ public abstract class Ghost : MonoBehaviour
     protected virtual void OnEnable()
     {
         BigPoint.OnBigPointCollected += SwitchToFrightened;
+        GameManager.OnGameOver += GameOverState;
     }
 
     protected virtual void OnDisable()
     {
         BigPoint.OnBigPointCollected -= SwitchToFrightened;
+        GameManager.OnGameOver -= GameOverState;
     }
 
     protected virtual void Update()
@@ -97,13 +102,22 @@ public abstract class Ghost : MonoBehaviour
         FSM.CurrentState.OnTriggerEnter2D(collision);
 
         Player p;
-        if(collision.gameObject.TryGetComponent(out p) && FSM.CurrentState == FSM_frightenedState)
+        if(collision.gameObject.TryGetComponent(out p))
         {
-            StopAllCoroutines();
+            if (FSM.CurrentState == FSM_frightenedState)
+            {
+                StopAllCoroutines();
 
-            Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), p.GetComponent<Collider2D>(), true);
-            FSM.GoToState(FSM_eatenState);
-            ScoreManager.Instance.AddPoint(300);
+                Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), p.GetComponent<Collider2D>(), true);
+                FSM.GoToState(FSM_eatenState);
+                ScoreManager.Instance.AddPoint(300);
+            }
+            else
+            {
+                // Game Over
+                GameManager.Instance.GameOver();
+                Destroy(p.gameObject);
+            }
         }
     }
 
@@ -115,4 +129,6 @@ public abstract class Ghost : MonoBehaviour
         FSM.GoToState(FSM_frightenedState);
         StartCoroutine(COWaitFirghtenedTimer());
     }
+
+    private void GameOverState() => FSM.GoToState(FSM_gameOver);
 }
