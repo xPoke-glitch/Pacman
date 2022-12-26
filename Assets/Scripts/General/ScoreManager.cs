@@ -6,20 +6,39 @@ using System;
 public class ScoreManager : Singleton<ScoreManager>
 {
     public static event Action<int> OnScoreChanged;
+    public static event Action<int> OnHighScoreChanged;
 
     private int _totalScore = 0;
-
+    private int _highScore = 0;
     public void AddPoint(int amount)
     {
         _totalScore += amount;
         OnScoreChanged?.Invoke(_totalScore);
     }
 
-    public void ResetScore()
+    public void SaveHighScore()
     {
-        // Saving high score ecc here ...
-        _totalScore = 0;
+        if(_totalScore > _highScore)
+            PlayerPrefs.SetInt("hs",_totalScore);
+    }
 
-        OnScoreChanged?.Invoke(_totalScore);
+    public void LoadHighScore()
+    {
+        _highScore = PlayerPrefs.GetInt("hs", 0);
+        OnHighScoreChanged?.Invoke(_highScore);
+    }
+
+    private void Start()
+    {
+        LoadHighScore();
+    }
+
+    private void OnEnable()
+    {
+        GameManager.OnGameOver += SaveHighScore;
+    }
+    private void OnDisable()
+    {
+        GameManager.OnGameOver -= SaveHighScore;
     }
 }

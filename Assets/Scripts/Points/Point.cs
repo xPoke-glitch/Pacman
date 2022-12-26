@@ -9,8 +9,14 @@ public abstract class Point : MonoBehaviour
     [SerializeField]
     private int amount = 100;
 
+    public virtual void Start()
+    {
+        PointManager.Instance.IncrementPointCount();
+    }
+    
     public virtual void Collect()
     {
+        PointManager.Instance.DecrementPointCount();
         CustomLog.Log(CustomLog.CustomLogType.GAMEPLAY, "Point Collected with amount " + amount);
         ScoreManager.Instance.AddPoint(amount);
         Destroy(gameObject);
