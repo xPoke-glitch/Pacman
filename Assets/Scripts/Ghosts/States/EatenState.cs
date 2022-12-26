@@ -5,9 +5,6 @@ using System;
 
 public class EatenState : FSMState
 {
-    public static event Action OnGhostEaten;
-    public static event Action OnGhostRestored;
-
     private Ghost _ghost;
     private Vector3 _target;
 
@@ -20,7 +17,7 @@ public class EatenState : FSMState
     public override void OnEnter()
     {
         base.OnEnter();
-        OnGhostEaten?.Invoke();
+      
         // 180 rotation on enter state
         _ghost.SetDirection(_ghost.MovementDirection * -1);
     }
@@ -28,7 +25,6 @@ public class EatenState : FSMState
     public override void OnExit()
     {
         base.OnExit();
-        OnGhostRestored?.Invoke();
     }
 
     private Vector3 ChooseDirection(List<Vector3> directions)
