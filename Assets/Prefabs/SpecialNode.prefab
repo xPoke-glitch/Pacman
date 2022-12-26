@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3737405290359549019}
   - component: {fileID: 1626683675557899807}
   - component: {fileID: 8033596789746745655}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpecialNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 0.7}
+  m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
 --- !u!114 &8033596789746745655
 MonoBehaviour:
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2550264404809661908}
   - component: {fileID: 4837860716364916472}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

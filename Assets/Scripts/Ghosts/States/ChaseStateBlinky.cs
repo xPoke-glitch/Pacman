@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public class ScatterState : FSMState
+public class ChaseStateBlinky : FSMState
 {
     private Ghost _ghost;
-    private Vector3 _target;
+    private Transform _target;
 
-    public ScatterState(Ghost ghost, Vector3 target)
+    public ChaseStateBlinky(Ghost ghost, Transform target)
     {
         _ghost = ghost;
         _target = target;
@@ -33,18 +32,18 @@ public class ScatterState : FSMState
         // Find the Best from target Distance
         int bestIndex = 0;
         float bestDistance = Mathf.Infinity;
-        for(int i=0; i<directions.Count; ++i)
+        for (int i = 0; i < directions.Count; ++i)
         {
-            float distance = Vector3.Distance(_ghost.transform.position+directions[i], _target);
+            float distance = Vector3.Distance(_ghost.transform.position + directions[i], _target.position);
             if (distance < bestDistance)
             {
                 bestIndex = i;
                 bestDistance = distance;
             }
-            else if(distance == bestDistance)
+            else if (distance == bestDistance)
             {
                 // Priority check
-                if(i < bestIndex)
+                if (i < bestIndex)
                 {
                     bestIndex = i;
                 }
@@ -58,12 +57,12 @@ public class ScatterState : FSMState
         base.OnTriggerEnter2D(collision);
 
         Node node = null;
-        if(collision.gameObject.TryGetComponent(out node))
+        if (collision.gameObject.TryGetComponent(out node))
         {
             // Copy the Direction list
             // You don't want to modify the Node.Directions list
             List<Vector3> directions = new List<Vector3>();
-            for(int i=0; i<node.Directions.Count; ++i)
+            for (int i = 0; i < node.Directions.Count; ++i)
             {
                 directions.Add(node.Directions[i]);
             }

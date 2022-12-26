@@ -4,64 +4,57 @@ using UnityEngine;
 using Utils;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Ghost : MonoBehaviour
+public abstract class Ghost : MonoBehaviour
 {
     public Vector3 MovementDirection { get; private set; }
 
     [Header("General Settings")]
     [SerializeField]
-    private float movementSpeed = 2.0f;
+    protected float MovementSpeed = 2.0f;
     [SerializeField]
-    private LayerMask obstacleLayer;
+    protected LayerMask ObstacleLayer;
 
     [Header("Ghost States Settings")]
     [SerializeField]
-    private Transform scatterTarget;
+    protected Transform ScatterTarget;
+
+    protected FSMSystem FSM;
+    protected Player Player;
 
     private Rigidbody2D _rb;
-
-    // FSM
-    private FSMSystem _FSM;
-    private ScatterState _scatterState;
 
     public void SetDirection(Vector3 direction)
     {
         MovementDirection = direction;
     }
 
-    private void Awake()
+    protected abstract void SetupFSM();
+   
+    protected virtual void Awake()
     {
         MovementDirection = Vector3.zero;
         _rb = GetComponent<Rigidbody2D>();
+        Player = FindObjectOfType<Player>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         SetupFSM();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        _FSM.CurrentState.OnUpdate();
+        FSM.CurrentState.OnUpdate();
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
-        _rb.MovePosition(transform.position + MovementDirection * Time.fixedDeltaTime * movementSpeed);
-        _FSM.CurrentState.OnFixedUpdate();
+        _rb.MovePosition(transform.position + MovementDirection * Time.fixedDeltaTime * MovementSpeed);
+        FSM.CurrentState.OnFixedUpdate();
     }
-
-    private void SetupFSM()
+   
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        _FSM = new FSMSystem();
-        _scatterState = new ScatterState(this,scatterTarget.position);
-        
-        _FSM.AddState(_scatterState);
-        _FSM.GoToState(_scatterState);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        _FSM.CurrentState.OnTriggerEnter2D(collision);
+        FSM.CurrentState.OnTriggerEnter2D(collision);
     }
 }
