@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChaseStatePinky : FSMState
+public class ChaseStateInky : FSMState
 {
     private Ghost _ghost;
     private Vector3 _target;
     private PlayerMovements _playerTarget;
+    private Transform _blinkyTarget;
 
-    public ChaseStatePinky(Ghost ghost, Transform target)
+    public ChaseStateInky(Ghost ghost, Transform target, Transform blinkyTarget)
     {
         _ghost = ghost;
         _playerTarget = target.gameObject.GetComponent<PlayerMovements>();
+        _blinkyTarget = blinkyTarget;
     }
 
     public override void OnEnter()
@@ -85,11 +87,14 @@ public class ChaseStatePinky : FSMState
     {
         if (_playerTarget.MovementDirection == Vector3.up)
         {
-            _target = _playerTarget.transform.position + new Vector3Int(4, 4, 0);
+            _target = _playerTarget.transform.position + new Vector3Int(2, 2, 0);
         }
         else
         {
-            _target = _playerTarget.transform.position + _playerTarget.MovementDirection * 4f;
+            _target = _playerTarget.transform.position + _playerTarget.MovementDirection * 2f;
         }
+
+        // Vector from the target with offset 2 and Blinky position with 180 rotation
+        _target = (_blinkyTarget.position - _target)*-1;
     }
 }
