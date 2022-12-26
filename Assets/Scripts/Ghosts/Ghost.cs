@@ -17,6 +17,8 @@ public abstract class Ghost : MonoBehaviour
     [Header("Ghost States Settings")]
     [SerializeField]
     protected Transform ScatterTarget;
+    [SerializeField]
+    protected Transform EatenTarget;
 
     protected FSMSystem FSM;
     protected Player Player;
