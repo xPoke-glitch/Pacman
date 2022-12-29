@@ -3,7 +3,7 @@
 
 Recreation of Pacman with Unity
 
-<img src="https://github.com/Multiplayer-Game-Jam-Team/DuckTrust/blob/main/Screenshots/main-menu.png" width="750">
+<img src="https://github.com/xPoke-glitch/Pacman/blob/main/Screenshots/pac-man.png" width="750">
 
 # The game
 It's the classic Pac-Man game with the same ghosts AI behaviours! but without levels and lives, just pure and simple Pac-Man!
@@ -21,7 +21,7 @@ Use arrow keys for moving Pac-Man, and that's it!
 
 This is an example of the gameplay:
 
-<img src="https://github.com/Multiplayer-Game-Jam-Team/DuckTrust/blob/main/Screenshots/main-menu.png" width="750">
+<img src="https://github.com/xPoke-glitch/Pacman/blob/main/Screenshots/gameplay.gif" width="750">
 
 ## Team
 
