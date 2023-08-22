@@ -1,7 +1,7 @@
 # Pac-Man
 [![Made with Unity](https://img.shields.io/badge/Made%20with-Unity-57b9d3.svg?style=flat&logo=unity)](https://www.unity.com)
 
-Recreation of Pacman with Unity (Made within 16 hours)
+Remake of Pacman with Unity (Made within 16 hours)
 
 <img src="https://github.com/xPoke-glitch/Pacman/blob/main/Screenshots/pac-man.png" width="750">
 
